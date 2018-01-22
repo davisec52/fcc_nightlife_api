@@ -1,4 +1,3 @@
-//const ajax = new GLM.AJAX();
 $(document).ready(function() {
 
 	console.log("search.js connected");

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const config = require("../../config/config.json");
+const config = require("../../.config/.config");
 const app = express();
 const request = require("request");
 const mongoose = require("mongoose");
@@ -57,8 +57,13 @@ router.get("/login",(req, res, next) => {
 
 router.post("/login/user", preAuth, (req, res, next) => {
 	User.findByCredentials(req.body.email, req.body.password).then((user) => {
-		if(user.tokens.length > 0) {
+		/*if(user.tokens.length > 0) {
 			res.send({"error": "Currently logged in"});
+			return;
+		}*/
+
+		if(!user) {
+			res.send("User not found");
 			return;
 		}
 
@@ -157,7 +162,8 @@ router.get("/search/:term", (req, res) => {
 			url:  `https://api.yelp.com/v3/businesses/search?term=restaurant&location=${req.params.term}`,
 		    	headers: {
 		    		"Access-Control-Allow-Origin": true,
-		    		"Authorization": config.ACCESS_TOKEN,
+		    		//"Authorization": config.ACCESS_TOKEN,
+		    		"Authorization": process.env.ACCESS_TOKEN,
 		    		"Access-Control-Allow-Methods" :'GET,PUT,POST,DELETE',
 		    		"Access-Control-Allow-Headers" :"Origin, X-Requested-With, Content-Type, Accept"
 		    	}
@@ -248,7 +254,8 @@ router.get("/business/reviews/:id", (req, resres) => {
 				url: `https://api.yelp.com/v3/businesses/${id}/reviews`,
 			    	headers: {
 			    		"Access-Control-Allow-Origin": true,
-			    		"Authorization": config.ACCESS_TOKEN,
+			    		//"Authorization": config.ACCESS_TOKEN,
+			    		"Authorization": process.env.ACCESS_TOKEN,
 			    		"Access-Control-Allow-Methods" :'GET,PUT,POST,DELETE',
 			    		"Access-Control-Allow-Headers" :"Origin, X-Requested-With, Content-Type, Accept"
 			    	}

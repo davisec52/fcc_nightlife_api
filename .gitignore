@@ -1,8 +1,8 @@
 node_modules
-config.json
-package-lock.json
-data.txt
 playground
 helpers
+.config.json
+data.txt
 index_.html
 ajax-helpers.js
+package-lock.json

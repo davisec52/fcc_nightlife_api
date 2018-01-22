@@ -1,3 +1,4 @@
+require("../.config/.config");
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -10,8 +11,10 @@ let indexRoutes = require("./routes/indexRoutes");
 let port = process.env.PORT || 3000;
 
 //Assistance from https://www.devsbedevin.com/using-the-new-mongoose-connect-method-the-easy-way/
+//Now current with current versions of mongo and mongoose
+
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost/nightlife_api_db", {
+mongoose.connect(process.env.MONGODB_URI, {
 	useMongoClient: true,
 	promiseLibrary: mongoose.promise
 }).then(db => {console.log("mongoDb connected")}).catch((err) => {
