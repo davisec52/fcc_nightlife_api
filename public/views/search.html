@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Misc Title</title>
+		<meta name="viewport" content="width=device-width initial-scale=1 user-scalable=no">
+		<link rel="stylesheet" href="./css/normalize.css" />
+		<link rel="stylesheet" href="./css/styles.css" />
+		<script type="text/javascript" language="Javascript" src="./js/process-search-data.js"></script>
+		<script language="JavaScript" src="./js/glm-ajax.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.js"integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="crossorigin="anonymous"></script>
+	</head>
+	<body id="body">
+		<div id="search-container">
+		<div class="title-bar">
+			<div class="title-el">
+				<h1>Nightlife Search Genie</h1>
+			</div>
+			<div class="title-el">
+				<form id="search-form" action="/search/"+searchTerm method="GET">
+					<input type="text" id="search-term" name="search" placeholder="Search Entertainment" autofocus></input>
+					<button type="submit" class="search-button" id="search-btn">Search Now</button>
+				</form>
+				<button style="display:none; outline:none" id="check-attending"><a id="attend" href="#loc-h4">Check Attending</a></button>
+			</div>
+		</div>
+
+		<div id="modal-attachment-site"></div> <!-- box listing places to visit shown here -->
+
+		<div class="list-container"> <!-- search results and reviews shown here -->
+			
+		</div> <!-- .list-container -->
+		</div> <!-- search-container -->
+
+		<footer id="footer-loc">
+			<div id="foot">
+				<p id="foot-notes">
+					Copyright 2018 | wordeffx.com | Powered by <a href="https://yelp.com">Yelp.com</a>
+				</p>
+			</div>
+		</footer>
+
+		<script type="text/javascript" Language="Javascript" src="./js/search.js"></script>
+		<script type="text/javascript" language="Javascript" src="./js/header.js"></script>
+	</body>
+</html>
