@@ -75,6 +75,62 @@ $(document).ready(function(){
 	    }); // log-out
 	}); //get app-locals
 
+	let loginForm = document.querySelector("#login-form");
+	console.log("typeof ", typeof $("#login-form"));
+	console.log("typeof - 2 ", typeof loginForm);
+	/*loginForm.addEventListener("submit", function(evt) {
+		evt.preventDefault();
+		let data = this.serialize();
+		console.log(data);
+	});*/
+
+	/*loginForm.addEventListener("submit", function(evt){
+		evt.preventDefault();
+		console.log("this... ", this.password.value);
+
+        $.ajax({
+            url: "/login/user",
+            method: "POST",
+            data: "username="+this.username.value&"email="+this.email.value&"password="+this.password.value,
+            success: function(response){
+            	if(!response){
+            		alert("No user found");
+            	}else {
+            		console.log("response ", response);
+            	}
+            },
+        });
+        //return false;
+	});*/
+
+
+	// preventDefault and return false are commented out to allow the submission of valid login
+	//credentials to occur but trigger an alert if login attemp is invalid.
+	$("#login-form").submit(function(e) {
+		//e.preventDefault();
+
+		console.log(this.username.value + "---" + this.email.value);
+
+		let formData = $(this).serialize();
+		console.log("formData ", formData);
+
+		$.ajax({
+            url: "/login/user",
+            method: "POST",
+            //data: "username="+this.username.value&"email="+this.email.value&"password="+this.password.value&"attainAjax="+true,
+            data: formData,
+            success: function(response){
+            //If login is invalid, the redirection back to login.html will trigger the alert.
+            	if(response){
+            		alert("No such user. Have you registered?");
+            	}else {
+            		
+            	}
+            },
+        });
+       // return false;
+	});
+
 
 }); //document
 

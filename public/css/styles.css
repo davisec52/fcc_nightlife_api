@@ -287,6 +287,13 @@ li {
 	border: 1px solid black;
 }
 
+#register-form {
+	display: block;
+	margin-left: 10%;
+	margin-right: 10%;
+	border: 1px solid black;
+}
+
 .login-input {
 	display: block;
 	margin: 0 auto;
@@ -437,7 +444,7 @@ li {
 	}
 
 	.login-container {
-		margin-top: 325px;
+		margin-top: 300px;
 	}
 
 	.title-bar {
@@ -495,7 +502,7 @@ li {
 	}
 
 	.login-container {
-		margin-top: 325px;
+		margin-top: 300px;
 	}
 
 	.modal-list {

@@ -57,13 +57,13 @@ router.get("/login",(req, res, next) => {
 
 router.post("/login/user", preAuth, (req, res, next) => {
 	User.findByCredentials(req.body.email, req.body.password).then((user) => {
-		/*if(user.tokens.length > 0) {
+		if(user.tokens.length > 0) {
 			res.send({"error": "Currently logged in"});
 			return;
-		}*/
+		}
 
 		if(!user) {
-			res.send("User not found");
+			res.send({"error":"undefined"});
 			return;
 		}
 
@@ -76,6 +76,7 @@ router.post("/login/user", preAuth, (req, res, next) => {
 		
 	}).catch((err) => {
 		res.status(400).send({"error": "Bad request; failure to find match."});
+		//res.status(400).redirect("/back");
 	});
 	
 });

@@ -12,10 +12,11 @@ let preAuth = (req, res, next) => {
 			console.log("tokens array length from preAuth ", user.tokens.length)
 		}
 		
-		if(!user) {
+		if(user === "undefined") {
 			console.log("No such user");
-			next();
-			//return Promise.reject();
+			//res.send("No such user - preauth");
+			//next();
+			return Promise.reject();
 		}else {
 			if(user.tokens.length > 0) {
 				user.removeToken(user.tokens[0].token).then(() => {
@@ -28,7 +29,7 @@ let preAuth = (req, res, next) => {
 				}
 			}
 		}
-	}).catch((err) => {console.log(err); next()});
+	}).catch((err) => {console.log("err ", err); res.redirect("back"); });
 };
 
 module.exports = {preAuth};
