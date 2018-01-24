@@ -4,7 +4,8 @@
   "description": "nightlife coordination app using yelp api.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node /server/app.js"
   },
   "engines": {
     "node": "8.5.0"
