@@ -207,6 +207,7 @@ router.get("/search/:term", (req, res) => {
 					price: loc.price,
 					rating: loc.rating,
 					image_url: loc.image_url,
+					url: loc.url,
 					location: loc.location.address1,
 					reviews: []
 				};

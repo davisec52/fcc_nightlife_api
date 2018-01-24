@@ -7,6 +7,7 @@ let destinationSchema = new mongoose.Schema({
 	price: String,
 	rating: String,
 	image_url: String,
+	url: String,
 	count: {type: Number, default: 0},
 	author: {
 		id: {
@@ -39,7 +40,7 @@ let searchSchema = new mongoose.Schema({
 		},
 		username: String
 	},
-	businesses: Array,
+	//businesses: Array,
 	createdAt: Number
 });
 
