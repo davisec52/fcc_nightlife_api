@@ -58,6 +58,6 @@ app.use(express.static(publicPath2));
 
 app.use("/", indexRoutes);
 
-app.listen(port, () => {
+app.listen(port, process.env.IP, () => {
 	console.log(`Server listening on ${port}`);
 });

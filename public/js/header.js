@@ -117,14 +117,13 @@ $(document).ready(function(){
 		$.ajax({
             url: "/login/user",
             method: "POST",
-            //data: "username="+this.username.value&"email="+this.email.value&"password="+this.password.value&"attainAjax="+true,
             data: formData,
             success: function(response){
             //If login is invalid, the redirection back to login.html will trigger the alert.
             	if(response){
-            		alert("No such user. Have you registered?");
+            		confirm("Have you registered?");
             	}else {
-            		
+            		console.log(response);
             	}
             },
         });
