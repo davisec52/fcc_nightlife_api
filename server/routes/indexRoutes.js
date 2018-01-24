@@ -171,6 +171,7 @@ router.get("/search/:term", (req, res) => {
 
 		request(options, (error, response, body) => {
 			let result = JSON.parse(body);
+			console.log("result from request ", result);
 			let data = result.businesses;
 			let searchTerm = req.params.term;
 
