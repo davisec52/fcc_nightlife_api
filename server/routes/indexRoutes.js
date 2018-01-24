@@ -76,7 +76,6 @@ router.post("/login/user", preAuth, (req, res, next) => {
 		
 	}).catch((err) => {
 		res.status(400).send({"error": "Bad request; failure to find match."});
-		//res.status(400).redirect("/back");
 	});
 	
 });
