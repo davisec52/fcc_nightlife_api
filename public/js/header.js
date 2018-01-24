@@ -31,7 +31,7 @@ $(document).ready(function(){
 			let userName = null;
 		}else {
 			let userName = data.username;
-			let content = `Signed in as: ${userName}`;
+			let content = `Welome Home: ${userName}`;
 			headerEl.innerHTML = content;
 			//to make "check attending" button visible
 			if(document.getElementById("check-attending")) {
@@ -50,7 +50,11 @@ $(document).ready(function(){
 	    $.get("/app-locals", (response) => {
 			let token = response.token;
 			if(token) {
-				let confirmLogout = confirm("Are you sure you want to logout?");
+
+				let confirmLogout = confirm(`Do you really want to logout? Do you really want to be *that* way? Seriously? Ok. See ya'...wouldn't wanna be ya...
+					
+					Bye.`);
+					
 				if(confirmLogout) {
 					$.ajax({
 						type: "DELETE",
@@ -78,31 +82,6 @@ $(document).ready(function(){
 	let loginForm = document.querySelector("#login-form");
 	console.log("typeof ", typeof $("#login-form"));
 	console.log("typeof - 2 ", typeof loginForm);
-	/*loginForm.addEventListener("submit", function(evt) {
-		evt.preventDefault();
-		let data = this.serialize();
-		console.log(data);
-	});*/
-
-	/*loginForm.addEventListener("submit", function(evt){
-		evt.preventDefault();
-		console.log("this... ", this.password.value);
-
-        $.ajax({
-            url: "/login/user",
-            method: "POST",
-            data: "username="+this.username.value&"email="+this.email.value&"password="+this.password.value,
-            success: function(response){
-            	if(!response){
-            		alert("No user found");
-            	}else {
-            		console.log("response ", response);
-            	}
-            },
-        });
-        //return false;
-	});*/
-
 
 	// preventDefault and return false are commented out to allow the submission of valid login
 	//credentials to occur but trigger an alert if login attemp is invalid.
@@ -121,11 +100,16 @@ $(document).ready(function(){
             success: function(response){
             //If login is invalid, the redirection back to login.html will trigger the alert.
             	if(response){
-            		confirm("Have you registered?");
+            		next();
             	}else {
             		console.log(response);
             	}
             },
+            error: function(err) {
+            	console.log(err);
+            	alert("Invalid login. You may need to register.");
+            	window.location.href = "login.html"
+            }
         });
        // return false;
 	});

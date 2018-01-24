@@ -29,7 +29,7 @@ let preAuth = (req, res, next) => {
 				}
 			}
 		}
-	}).catch((err) => {console.log("err ", err); res.redirect("back");});
+	}).catch((err) => {console.log("err ", err); next()});
 };
 
 module.exports = {preAuth};
