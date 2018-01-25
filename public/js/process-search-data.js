@@ -21,6 +21,8 @@ let processData = function(data) {
 
 	if(data) {
 
+		localStorage.removeItem("test");
+
 		data.businesses.forEach(function(biz) {
 
 			/*let bizName = localStorage.setItem(biz.name, JSON.stringify(biz.name));
