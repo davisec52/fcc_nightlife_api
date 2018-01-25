@@ -20,6 +20,10 @@ $(document).ready(function() {
 			$.get(`/search/${searchTerm}`, (result) => {
 				let allBusinesses = result.businesses;
 
+				//let storage = localStorage.setItem("result", JSON.stringify(result));
+				//let getResult = localStorage.getItem("result");
+				//let resObj = JSON.parse(getResult);
+
 				processData(result);
 			});
 

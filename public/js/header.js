@@ -61,7 +61,6 @@ $(document).ready(function(){
 						url: "/login/user/logout",
 						headers: {"x-auth": token},
 						success: function(data) {
-							console.log(data);
 
 							let headerEl = document.getElementsByClassName("signed-in")[0];
 							let content = "Signed in as: "
@@ -98,9 +97,8 @@ $(document).ready(function(){
             method: "POST",
             data: formData,
             success: function(response){
-            //If login is invalid, the redirection back to login.html will trigger the alert.
             	if(response){
-            		next();
+            		//next();
             	}else {
             		console.log(response);
             	}
@@ -115,5 +113,39 @@ $(document).ready(function(){
 	});
 
 
-}); //document
+	function storageAvailable(type) {
+    try {
+        var storage = window[type],
+            x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return e instanceof DOMException && (
+            // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            storage.length !== 0;
+    }
+}
 
+
+	if (storageAvailable('sessionStorage') && storageAvailable("localStorage")) {
+
+		console.log("storage available")
+	}
+	else {
+
+		console.log("storage not available")
+	}
+
+
+}); //document

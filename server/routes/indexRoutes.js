@@ -149,7 +149,6 @@ router.get("/search/:term", (req, res) => {
 				console.log("New searches coll sent to businessInfoAndDatabase for re-creation");
 				businessInfoAndDatabase();
 			}
-				
 				res.json(search);
 		}
 			console.log("No existing search. Calling next func");
@@ -172,7 +171,7 @@ router.get("/search/:term", (req, res) => {
 
 		request(options, (error, response, body) => {
 			let result = JSON.parse(body);
-			console.log("result from request ", result);
+			//console.log("result from request ", result);
 			let data = result.businesses;
 			let searchTerm = req.params.term;
 

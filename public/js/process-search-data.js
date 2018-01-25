@@ -5,30 +5,64 @@ function removeDiacritics(str) {
 }
 
 let processData = function(data) {
+	console.log("data ", data);
+	//let getStorage = localStorage.getItem("result");
+	//let data = JSON.parse(getStorage);
+	//console.log("retrieve storage ", data);
+
 	let revArray = [];
 
 	let listContainer = document.getElementsByClassName("list-container")[0];
 
+	localStorage.setItem("test", "just a test");
+	let storage = localStorage.getItem("test");
+
+	listContainer.innerHTML = storage;
+
 	if(data) {
+
 		data.businesses.forEach(function(biz) {
+
+			/*let bizName = localStorage.setItem(biz.name, JSON.stringify(biz.name));
+			let getName = localStorage.getItem(biz.name);
+			let name = JSON.parse(getName);
+			let bizImageUrl = localStorage.setItem(biz.image_url, JSON.stringify(biz.image_url));
+			let getBizImageUrl = localStorage.getItem(biz.image_url);
+			let imageUrl = JSON.parse(getBizImageUrl);
+			let bizUrl = localStorage.setItem(biz.url, JSON.stringify(biz.url));
+			let getBizUrl = localStorage.getItem(biz.url);
+			let url = JSON.parse(getBizUrl);
+			let bizPrice = localStorage.setItem(biz.price, JSON.stringify(biz.price));
+			let getBizPrice = localStorage.getItem(biz.price);
+			let price = JSON.parse(getBizPrice);
+			let bizRating = localStorage.setItem(biz.rating, JSON.stringify(biz.rating));
+			let getBizRating = localStorage.getItem(biz.rating);
+			let rating = JSON.parse(getBizRating);*/
+
+			localStorage.name = biz.name;
+			localStorage.url = biz.url;
+			localStorage.imageUrl = biz.image_url;
+			localStorage.price = biz.price;
+			localStorage.rating = biz.rating;
+
 
 			let htmlDiv = document.createElement("div");
 			htmlDiv.setAttribute("class", "html-div");
 
-			let items =
+			let item =
 
 			`<div class="item-box">
 				<div class="image" style="display:block">
-					<img class="thumb align" src="${biz.image_url}" />
+					<img class="thumb align" src="${localStorage.imageUrl}" />
 					<div>
 					<button class="review-btn">Get Reviews</button>
 					</div>
 				</div>
 				<div class="item-desc">
 					<ul class="item-txt">
-						<li><u>Locale</u>: <a id="name-link" href=${biz.url}>${biz.name}</a></li>
-						<li><u>Price</u>: ${biz.price}</li>
-						<li><u>Rating</u>: ${biz.rating}</li>
+						<li><u>Locale</u>: <a id="name-link" href=${localStorage.url}>${localStorage.name}</a></li>
+						<li><u>Price</u>: ${localStorage.price}</li>
+						<li><u>Rating</u>: ${localStorage.rating}</li>
 					</ul>
 				</div>
 				<div id="going">
@@ -47,7 +81,9 @@ let processData = function(data) {
 			</div>
 		</div>`;
 
-			htmlDiv.innerHTML = items;
+			localStorage.item = item
+
+			htmlDiv.innerHTML = localStorage.item;
 			listContainer.append(htmlDiv);
 
 		});
@@ -136,4 +172,3 @@ let processData = function(data) {
 	};
 
 }
-
