@@ -14,14 +14,7 @@ let processData = function(data) {
 
 	let listContainer = document.getElementsByClassName("list-container")[0];
 
-	localStorage.setItem("test", "just a test");
-	let storage = localStorage.getItem("test");
-
-	listContainer.innerHTML = storage;
-
 	if(data) {
-
-		localStorage.removeItem("test");
 
 		data.businesses.forEach(function(biz) {
 
