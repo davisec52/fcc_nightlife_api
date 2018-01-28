@@ -2,6 +2,30 @@ $(document).ready(function() {
 
 	console.log("search.js connected");
 
+	/*let checkLocals = function() {
+		$.get("/app-locals", (response) => {
+			console.log("check locals");
+			if(response.authenticated) {
+				authArr.push(1);
+			}else {
+				authArr.push(2);
+			}
+		});
+	}
+	checkLocals();
+
+	console.log("check authArr ", authArr);
+
+	$.get("/app-locals-search", (response) => {
+		let result = JSON.parse(response);
+		console.log("result.length ", result.length);
+		if(result.length) {
+			let locations = result[0].businesses;
+			console.log("response ", locations);
+			processData(locations);
+		}
+	});*/
+
 	if(document.getElementById("search-btn")){
 		document.getElementById("search-btn").addEventListener("click", (e) => {
 			e.preventDefault();
@@ -15,16 +39,28 @@ $(document).ready(function() {
 				return;
 			}else {
 				searchTerm = document.getElementById("search-term").value;
+				document.getElementsByClassName("loader")[0].style.display = "block";
 			}
 
 			$.get(`/search/${searchTerm}`, (result) => {
 				let allBusinesses = result.businesses;
-
-				//let storage = localStorage.setItem("result", JSON.stringify(result));
-				//let getResult = localStorage.getItem("result");
-				//let resObj = JSON.parse(getResult);
-
-				processData(result);
+				
+				$.get("/app-locals", (response) => {
+					if(response.authenticated) {
+						console.log("verifying auth from locals on search.js");
+						$.get("/app-locals-search", (searchData) => {
+							console.log("receiving locals searchData");
+							let localsSearch = JSON.parse(searchData);
+							console.log("sending searchData for processing")
+							processData(localsSearch[0]);
+						});
+					}else {
+						console.log("sending result wi no auth")
+						processData(result);
+					}
+					
+				});
+				//processData(result);
 			});
 
 			function elementCallback(response) {
@@ -37,6 +73,8 @@ $(document).ready(function() {
 
 		});
 	}
+
+	
 
 	let body = document.getElementById("search-container");
 	let modalAttachment = document.getElementById("modal-attachment-site");
@@ -105,6 +143,5 @@ $(document).ready(function() {
 		} //else
 
 	});
-
 
 }); //$(document).ready()

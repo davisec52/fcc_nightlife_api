@@ -12,6 +12,7 @@ const {authenticate} = require("../middleware/authenticate");
 const bcrypt = require("bcryptjs");
 
 app.locals.currentUser = {};
+app.locals.currentSearch = [];
 
 router.get("/", (req, res) => {
 	res.redirect("/search.html");
@@ -20,6 +21,11 @@ router.get("/", (req, res) => {
 router.get("/app-locals", (req, res, next) => {
 	res.json(app.locals.currentUser);
 });
+
+router.get("/app-locals-search", (req, res, next) => {
+	let pkg = JSON.stringify(app.locals.currentSearch);
+	res.json(pkg);
+})
 
 router.get("/user-data/", (req, res, next) => {
 	let username = app.locals.currentUser.username;
@@ -47,6 +53,7 @@ router.post("/register", (req, res, next) => {
 		app.locals.currentUser._id = user._id;
 		app.locals.currentUser.username = user.username;
 		app.locals.currentUser.token = token;
+		app.locals.currentUser.authenticated = true;
 		res.header("x-auth", token).redirect("/search.html");
 	}).catch((err) => res.status(400).send(err));
 });
@@ -71,6 +78,7 @@ router.post("/login/user", preAuth, (req, res, next) => {
 			app.locals.currentUser._id = user._id;
 			app.locals.currentUser.username = user.username;
 			app.locals.currentUser.token = token;
+			app.locals.currentUser.authenticated = true;
 			res.header("x-auth", token).redirect("/search.html");
 		});
 		
@@ -130,14 +138,22 @@ router.delete("/login/user/logout", authenticate, (req, res, next) => {
 	console.log("delete - req.token ", req.token);
 	req.user.removeToken(req.token).then(() => {
 		app.locals.currentUser = {};
+		app.locals.currentSearch = [];
 		res.status(200).send("You have successfully logged out!");
 	}, err => res.status(400).send({"error": "Problem with token deletion."}));
 });
 
 router.get("/search/:term", (req, res) => {
 	console.log("search params ", req.params.term);
+	app.locals.currentSearch = [];
+
+	if(app.locals.currentUser.authenticated) {
+		console.log("currentSearch - serverside ", app.locals.currentSearch);
+	}
+	
 
 	Search.findOne({region: req.params.term}).then((search) => {
+		//console.log("search ", search);
 		if(search) {
 
 			//if new search performed at or greater 24 hours later, the collection is dropped and re-created.
@@ -149,7 +165,13 @@ router.get("/search/:term", (req, res) => {
 				console.log("New searches coll sent to businessInfoAndDatabase for re-creation");
 				businessInfoAndDatabase();
 			}
-				res.json(search);
+				if(app.locals.currentUser.authenticated) {
+					app.locals.currentSearch.push(search);
+					console.log("app.locals.currentSearch - serverside ", app.locals.currentSearch.businesses);
+				}else {
+					console.log("sending res.json(search)");
+					return res.json(search);
+				}
 		}
 			console.log("No existing search. Calling next func");
 			businessInfoAndDatabase();
@@ -171,6 +193,12 @@ router.get("/search/:term", (req, res) => {
 
 		request(options, (error, response, body) => {
 			let result = JSON.parse(body);
+
+			if(app.locals.currentUser.authenticated) {
+				app.locals.currentSearch.push(result);
+				console.log("app.locals.currentSearch ", app.locals.currentSearch);
+			}
+			
 			//console.log("result from request ", result);
 			let data = result.businesses;
 			let searchTerm = req.params.term;
