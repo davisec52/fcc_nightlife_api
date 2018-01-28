@@ -96,8 +96,6 @@ router.post("/user-remove/:locName", (req, res) => {
 	};
 	console.log("toRemove.name ", toRemove.name);
 	User.findOne({username: app.locals.currentUser.username}).then((user) => {
-		console.log("user ", user);
-		console.log("user.attending ", user.attending);
 
 			user.attending.forEach((loc, index, ar) => {
 				if(loc === toRemove.name) {
@@ -107,11 +105,7 @@ router.post("/user-remove/:locName", (req, res) => {
 				}
 			});
 			user.save();
-
-			console.log("list - user.attending ", user.attending);
-
 			res.json(user);
-		
 
 	}).catch((err) => {console.log(err);});
 });
@@ -135,7 +129,6 @@ router.post("/user-add/:locName", (req, res) => {
 });
 
 router.delete("/login/user/logout", authenticate, (req, res, next) => {
-	console.log("delete - req.token ", req.token);
 	req.user.removeToken(req.token).then(() => {
 		app.locals.currentUser = {};
 		app.locals.currentSearch = [];
@@ -146,11 +139,6 @@ router.delete("/login/user/logout", authenticate, (req, res, next) => {
 router.get("/search/:term", (req, res) => {
 	console.log("search params ", req.params.term);
 	app.locals.currentSearch = [];
-
-	if(app.locals.currentUser.authenticated) {
-		console.log("currentSearch - serverside ", app.locals.currentSearch);
-	}
-	
 
 	Search.findOne({region: req.params.term}).then((search) => {
 		//console.log("search ", search);
@@ -184,7 +172,6 @@ router.get("/search/:term", (req, res) => {
 			url:  `https://api.yelp.com/v3/businesses/search?term=restaurant&location=${req.params.term}`,
 		    	headers: {
 		    		"Access-Control-Allow-Origin": true,
-		    		//"Authorization": config.ACCESS_TOKEN,
 		    		"Authorization": process.env.ACCESS_TOKEN,
 		    		"Access-Control-Allow-Methods" :'GET,PUT,POST,DELETE',
 		    		"Access-Control-Allow-Headers" :"Origin, X-Requested-With, Content-Type, Accept"
@@ -284,7 +271,6 @@ router.get("/business/reviews/:id", (req, resres) => {
 				url: `https://api.yelp.com/v3/businesses/${id}/reviews`,
 			    	headers: {
 			    		"Access-Control-Allow-Origin": true,
-			    		//"Authorization": config.ACCESS_TOKEN,
 			    		"Authorization": process.env.ACCESS_TOKEN,
 			    		"Access-Control-Allow-Methods" :'GET,PUT,POST,DELETE',
 			    		"Access-Control-Allow-Headers" :"Origin, X-Requested-With, Content-Type, Accept"

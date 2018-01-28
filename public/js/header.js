@@ -24,26 +24,6 @@
 
 $(document).ready(function(){
 
-//Call to app-locals for testing purposes
-	/*$.get("/app-locals", (response) => {
-		console.log("app-locals ", response);
-		if(response.authenticated) {
-		$.get("/app-locals-search", (response) => {
-			let result = JSON.parse(response);
-			console.log("result.length ", result.length);
-			if(result.length) {
-				let locations = result[0];
-				//console.log("response ", locations);
-				console.log("sending data from locals");
-				processData(locations);
-			}else {
-
-			}
-		});
-	}
-	});*/
-
-
 	function dataCallback(data) {
 		let headerEl = document.getElementsByClassName("signed-in")[0];
 
@@ -130,9 +110,9 @@ $(document).ready(function(){
             data: formData,
             success: function(response){
             	if(response){
-            		//next();
+            		console.log("login posted");
             	}else {
-            		console.log(response);
+            		console.log("Problem with response. Login not posted.");
             	}
             },
             error: function(err) {

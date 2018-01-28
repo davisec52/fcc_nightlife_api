@@ -74,8 +74,6 @@ $(document).ready(function() {
 		});
 	}
 
-	
-
 	let body = document.getElementById("search-container");
 	let modalAttachment = document.getElementById("modal-attachment-site");
 	let modalContainerDiv = document.createElement("div");
@@ -116,7 +114,6 @@ $(document).ready(function() {
 
 			let modalDiv = document.getElementById("modal");
 			modalDiv.innerHTML = ulHtml;
-			console.log("checking dom access ", document.getElementById("itemDel"));
 
 				if(document.getElementsByClassName("modal-list-item")) {
 					let coll = document.getElementsByClassName("modal-list-item");
